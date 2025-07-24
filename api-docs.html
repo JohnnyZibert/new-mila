@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Документация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        .endpoint {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .method {
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .url {
+            font-family: monospace;
+            font-size: 16px;
+            color: #495057;
+        }
+        
+        .code-block {
+            background: #f1f3f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #e9ecef;
+            border-left: 4px solid #6c757d;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Документация</h1>
+    
+    <h2>1. Процесс авторизации</h2>
+    <div class="step">
+        <strong>Шаг 1:</strong> Пациент переходит на страницу авторизации:<br>
+        <div class="code-block">{uiBasePath}/auth/{patentKey}/{patientCode}</div>
+    </div>
+
+    <h2>2. Авторизация</h2>
+    <div class="endpoint">
+        <div class="method">POST</div>
+        <span class="url">{apiBasePath}/auth</span>
+        <br><br>
+        <strong>Тип ответа:</strong> json<br><br>
+        
+        <strong>Тело запроса:</strong>
+        <div class="code-block">{
+    "patentKey": "{patentKey}",
+    "patientCode": "{patientCode}"
+}</div>
+        
+        <strong>Успешный ответ:</strong>
+        <div class="code-block success">{
+    "JWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}</div>
+        
+        <strong>Ошибка:</strong>
+        <div class="code-block error">{
+    "status": "error",
+    "message": "Неверный код пациента"
+}</div>
+    </div>
+
+    <div class="info">
+        <strong>Важно:</strong> После успешной авторизации добавьте JWT токен в заголовок всех последующих запросов:<br>
+        <div class="code-block">Authorization: Bearer {JWT}</div>
+    </div>
+
+    <h2>3. Получение документов</h2>
+    <div class="endpoint">
+        <div class="method">POST</div>
+        <span class="url">{apiBasePath}/doc</span>
+        <br><br>
+        <strong>Тип ответа:</strong> arraybuffer<br><br>
+        
+        <strong>Тело запроса:</strong>
+        <div class="code-block">{
+    "action": "getPackage" | "getPdp" | "getEdm"
+}</div>
+        
+        <strong>Успешный ответ:</strong>
+        <div class="code-block success">&lt;arraybuffer&gt; // Бинарные данные документа</div>
+        
+        <strong>Ошибка:</strong>
+        <div class="code-block error">{
+    "status": "error",
+    "message": "Документ не найден"
+}</div>
+    </div>
+
+    <h2>4. Подтверждение документов</h2>
+    <div class="endpoint">
+        <div class="method">POST</div>
+        <span class="url">{apiBasePath}/approve</span>
+        <br><br>
+        <strong>Тип ответа:</strong> json<br><br>
+        
+        <strong>Тело запроса:</strong>
+        <div class="code-block">{
+    "type": "pdp" | "edm"
+}</div>
+        
+        <strong>Успешный ответ:</strong>
+        <div class="code-block success">{
+    "status": "success",
+    "message": "Документ успешно подтвержден"
+}</div>
+        
+        <strong>Ошибка:</strong>
+        <div class="code-block error">{
+    "status": "error",
+    "data": null,
+    "message": "Ошибка подтверждения документа"
+}</div>
+    </div>
+
+    <h2>5. Подписание документов</h2>
+    <div class="endpoint">
+        <div class="method">POST</div>
+        <span class="url">{apiBasePath}/sign</span>
+        <br><br>
+        <strong>Тип ответа:</strong> json<br><br>
+        
+        <strong>Тело запроса:</strong>
+        <div class="code-block">{
+    "action": "onSigning" | "onReject"
+}</div>
+        
+        <strong>Успешный ответ:</strong>
+        <div class="code-block success">{
+    "status": "success",
+    "message": "Документ успешно подписан"
+}</div>
+        
+        <strong>Ошибка:</strong>
+        <div class="code-block error">{
+    "status": "error",
+    "message": "Ошибка подписания документа"
+}</div>
+    </div>
+</body>
+</html> 

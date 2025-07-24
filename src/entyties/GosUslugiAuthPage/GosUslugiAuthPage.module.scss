@@ -1,0 +1,36 @@
+.container {
+  background-color: var(--white);
+  padding: 21px 27px 43px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+
+  .title {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--color-blue-100);
+    text-align: center;
+    font-size: 18px;
+  }
+}
+
+.wrapperBtn {
+  position: static;
+  padding: 0;
+}
+
+.authButton {
+  background-color: var(--color-blue-100);
+}
+
+.logoWrapper {
+  margin-top: 30px;
+  margin-bottom: 38px;
+}
+
+.logoGos {
+  display: flex;
+  justify-self: center;
+}

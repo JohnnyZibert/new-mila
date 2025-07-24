@@ -1,0 +1,107 @@
+.container {
+  background-color: var(--white);
+  padding: 21px 27px 43px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .title {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--color-blue-100);
+    text-align: center;
+    font-size: 18px;
+  }
+}
+
+.code {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  text-align: start;
+}
+
+.info {
+  color: var(--color-neutral-400);
+  font-size: 14px;
+  line-height: 130%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-self: center;
+  border-radius: 8px;
+  padding: 10px 30px;
+  max-width: 150px;
+  margin-top: 40px;
+  margin-bottom: 37px;
+}
+
+.inputWrapper input {
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  color: var(--color-neutral-600);
+  font-weight: 600;
+}
+
+/* Пунктирный border через псевдоэлемент */
+.inputWrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    repeating-linear-gradient(
+      to right,
+      var(--color-neutral-500) 0 6px,
+      transparent 6px 10px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-neutral-500) 0 6px,
+      transparent 6px 10px
+    ),
+    repeating-linear-gradient(
+      to left,
+      var(--color-neutral-500) 0 6px,
+      transparent 6px 10px
+    ),
+    repeating-linear-gradient(
+      to top,
+      var(--color-neutral-500) 0 6px,
+      transparent 6px 10px
+    );
+  background-repeat: no-repeat;
+  background-position:
+    top left,
+    top right,
+    bottom right,
+    bottom left;
+  background-size:
+    100% 1.5px,
+    /* top */ 1.5px 100%,
+    /* right */ 100% 1.5px,
+    /* bottom */ 1.5px 100%; /* left */
+}
+
+.link {
+  color: var(--color-success-100);
+  font-weight: 400;
+}
+
+.wrapperBtn {
+  position: static;
+  padding: 0;
+}

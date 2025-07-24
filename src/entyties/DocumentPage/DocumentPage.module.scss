@@ -1,0 +1,31 @@
+.container {
+  background-color: var(--color-neutral-300);
+}
+
+.modal {
+  padding: 20px 25px 60px;
+
+  .title {
+    text-align: center;
+    color: var(--color-success-100);
+    margin-top: 0;
+  }
+
+  .info {
+    color: var(--color-neutral-400);
+    margin-bottom: 37px;
+  }
+}
+
+.buttons {
+  padding: 0;
+  margin-bottom: 36px;
+}
+
+.logo {
+  margin-top: 54px;
+  margin-bottom: 32px;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}

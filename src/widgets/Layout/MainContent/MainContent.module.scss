@@ -1,0 +1,18 @@
+.mainContent {
+  background: var(--color-neutral-300);
+  padding: 40px 200px 60px;
+  //min-height: calc(100vh - 50px);
+  position: relative;
+
+  @media (max-width: 1280px) {
+    padding: 40px 100px 60px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 40px 50px 60px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 13px 14px 30px;
+  }
+}
