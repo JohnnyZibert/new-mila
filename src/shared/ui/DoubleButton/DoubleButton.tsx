@@ -2,7 +2,6 @@ import cn from "classnames";
 import styles from "./DoubleButton.module.scss";
 import { useOrientation } from "../../hooks/Orientaion.tsx";
 import { ConsentMenuButton } from "../CustomizeButton/CustomizeButton.tsx";
-import { useEffect } from "react";
 
 interface Props {
   textFirstButton: string;
@@ -24,19 +23,10 @@ export const DoubleButton = ({
   classNameWrapper,
   classNameFirstBtn,
   classNameSecondBtn,
-  isSignStatus,
+  isSignStatus = false,
   linkApp,
 }: Props) => {
   const isHorizontalOrientationDevice = useOrientation();
-
-  useEffect(() => {
-    //убирает активность с кнопки на мобилке
-    setTimeout(() => {
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
-      }
-    }, 30);
-  }, []);
 
   return (
     <div
@@ -49,6 +39,7 @@ export const DoubleButton = ({
           textButton={textFirstButton}
           handleOnClick={handleOnClickFirst}
           classNameBtn={classNameFirstBtn}
+          linkApp={linkApp}
         />
       )}
       <ConsentMenuButton
@@ -56,7 +47,6 @@ export const DoubleButton = ({
         handleOnClick={handleOnClickSecond}
         classNameBtn={classNameSecondBtn}
         isCancelBtn
-        linkApp={linkApp}
       />
     </div>
   );

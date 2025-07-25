@@ -11,9 +11,10 @@ export const PdfViewer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(800); // начальная ширина
   const [numPages, setNumPages] = useState<number>(0);
-  const isPortrait = window.innerHeight > window.innerWidth;
-  const isMobile = window.innerWidth < 768;
-  const scale = isPortrait && isMobile ? 2 : 1;
+  // const isPortrait = window.innerHeight > window.innerWidth;
+  // const isMobile = window.innerWidth < 768;
+  // const scale = isPortrait && isMobile ? 1 : 1;
+  const scale = 1;
 
   const updateWidth = () => {
     if (containerRef.current) {

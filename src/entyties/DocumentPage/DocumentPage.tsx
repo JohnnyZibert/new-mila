@@ -6,6 +6,7 @@ import { Modal, Typography } from "antd";
 import styles from "./DocumentPage.module.scss";
 import LogoMila from "../../shared/assets/img/logoMila.svg?react";
 import { DoubleButton } from "../../shared/ui/DoubleButton/DoubleButton.tsx";
+import { downloadMilaApp } from "../../shared/constants/constants.ts";
 
 const { Paragraph, Title } = Typography;
 
@@ -21,10 +22,6 @@ export const DocumentPage = () => {
       }, 1000);
     }
   }, []);
-
-  const handleOnClickSetup = () => {
-    console.log("установить приложение");
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -45,7 +42,7 @@ export const DocumentPage = () => {
           <DoubleButton
             textFirstButton={"Установить"}
             textSecondButton={"Отмена"}
-            handleOnClickFirst={handleOnClickSetup}
+            linkApp={downloadMilaApp}
             handleOnClickSecond={closeModal}
             classNameWrapper={styles.buttons}
           />

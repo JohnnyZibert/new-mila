@@ -12,16 +12,17 @@ import { routesPath } from "../../shared/constants/constants.ts";
 
 export const Layout = () => {
   const location = useLocation();
-  const [errorKey, setErrorKey] = useState(location.pathname);
+  const [errorKey] = useState(location.pathname);
   const navigate = useNavigate();
-  const isDocumentPage = location.pathname.includes("/document");
-  const isPdnPage = location.pathname === "/";
-  const isEdoPage = location.pathname === "/sign-edo";
+  const isDocumentPage = location.pathname.includes(routesPath.DOCUMENT);
+  const isPdnPage = location.pathname === routesPath.SIGN_PDN;
+  const isEdoPage = location.pathname === routesPath.SIGN_EDO;
   const isSignStatus = useAppStore((state) => state.isSignStatus);
+  const [textBtn, setTextBtn] = useState<string>("");
 
-  useEffect(() => {
-    setErrorKey(location.pathname); // сброс при смене пути
-  }, [location.pathname]);
+  const handleOnClickDownloadPdf = () => {
+    console.log("Скачать ПДФ");
+  };
 
   const handleOnClickSignature = () => {
     if (isDocumentPage) {
@@ -33,9 +34,15 @@ export const Layout = () => {
     }
   };
 
-  const textBtnAgreements = isPdnPage
-    ? "Согласен"
-    : "Присоединяюсь к соглашению";
+  useEffect(() => {
+    if (isDocumentPage) {
+      setTextBtn("Подписать");
+    } else if (isPdnPage) {
+      setTextBtn("Согласен");
+    } else if (isEdoPage) {
+      setTextBtn("Присоединяюсь к соглашению");
+    }
+  }, [location.pathname]);
 
   return (
     <div className={styles.container} key={location.pathname}>
@@ -46,7 +53,7 @@ export const Layout = () => {
       {!isDocumentPage && (isPdnPage || isEdoPage) ? (
         <div className={styles.wrapper}>
           <ConsentMenuButton
-            textButton={textBtnAgreements}
+            textButton={textBtn}
             handleOnClick={handleOnClickSignature}
             classNameBtn={styles.agreeBtn}
           />
@@ -54,10 +61,10 @@ export const Layout = () => {
       ) : (
         isDocumentPage && (
           <DoubleButton
-            textFirstButton="Подписать"
+            textFirstButton={textBtn}
             textSecondButton="Скачать"
             handleOnClickFirst={handleOnClickSignature}
-            linkApp={"https://mila.online/mila-downloadhtml"}
+            handleOnClickSecond={handleOnClickDownloadPdf}
             isSignStatus={isSignStatus}
             classNameWrapper={styles.wrapperBtn}
           />

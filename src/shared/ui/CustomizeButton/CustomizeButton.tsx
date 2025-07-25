@@ -31,7 +31,7 @@ export const ConsentMenuButton = ({
     >
       {linkApp ? (
         <a href={linkApp} target="_blank" rel="noreferrer">
-          Скачать
+          {textButton}
         </a>
       ) : (
         textButton
