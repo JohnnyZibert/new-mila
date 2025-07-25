@@ -15,7 +15,6 @@ export const PdfViewer = () => {
   const isPortrait = window.innerHeight > window.innerWidth;
   const isMobile = window.innerWidth < 768;
   // const scale = isPortrait && isMobile ? 1 : 1;
-  const scale = 1;
 
   const updateWidth = () => {
     if (containerRef.current) {
@@ -59,7 +58,7 @@ export const PdfViewer = () => {
             wheel={{ disabled: true }} // отключаем колесо мыши, если оно мешает
             pinch={{ disabled: false }}
             doubleClick={{ disabled: false }}
-            panning={{ disabled: false }}
+            panning={{ disabled: true }}
           >
             <TransformComponent>
               <div
@@ -81,7 +80,6 @@ export const PdfViewer = () => {
                       width={width}
                       renderAnnotationLayer={false}
                       renderTextLayer={true}
-                      scale={scale}
                       renderMode="canvas"
                     />
                   ))}
@@ -103,7 +101,6 @@ export const PdfViewer = () => {
               width={width}
               renderAnnotationLayer={false}
               renderTextLayer={true}
-              scale={scale}
               renderMode="canvas"
             />
           ))}
