@@ -12,7 +12,7 @@ export const PdfViewer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(800); // начальная ширина
   const [numPages, setNumPages] = useState<number>(0);
-  // const isPortrait = window.innerHeight > window.innerWidth;
+  const isPortrait = window.innerHeight > window.innerWidth;
   const isMobile = window.innerWidth < 768;
   // const scale = isPortrait && isMobile ? 1 : 1;
   const scale = 1;
@@ -53,7 +53,7 @@ export const PdfViewer = () => {
 
   return (
     <div ref={containerRef} className={styles.container}>
-      {isMobile ? (
+      {isMobile && isPortrait ? (
         <div>
           <TransformWrapper
           // options={{ maxScale: 5, minScale: 0.5 }}
