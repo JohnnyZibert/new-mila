@@ -63,13 +63,13 @@ export const PdfViewer = () => {
           >
             <TransformComponent
               wrapperStyle={{
-                touchAction: "pan-y pinch-zoom", // включаем вертикальный скролл + pinch
+                touchAction: "pinch-zoom", // включаем вертикальный скролл + pinch
               }}
             >
               <div
                 style={{
                   overflowY: "auto",
-                  overscrollBehavior: "contain",
+                  overscrollBehavior: "auto",
                 }}
               >
                 <Document
