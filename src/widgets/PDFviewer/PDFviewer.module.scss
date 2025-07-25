@@ -21,7 +21,7 @@
 }
 
 .scrollArea {
-  max-height: 100vh;
+  max-height: 80vh;
   overflow-y: auto;
   overscroll-behavior-y: auto; // 👈 ключ к "прозрачному" скроллу
   -webkit-overflow-scrolling: touch;

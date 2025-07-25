@@ -57,15 +57,11 @@ export const PdfViewer = () => {
         <div className={styles.scrollArea}>
           <TransformWrapper
             wheel={{ disabled: true }} // отключаем колесо мыши, если оно мешает
-            pinch={{ disabled: true }}
-            doubleClick={{ disabled: true }}
-            panning={{ disabled: false }}
+            pinch={{ disabled: false }}
+            doubleClick={{ disabled: false }}
+            panning={{ disabled: true }}
           >
-            <TransformComponent
-              wrapperStyle={{
-                touchAction: "pinch-zoom", // включаем вертикальный скролл + pinch
-              }}
-            >
+            <TransformComponent>
               <div
                 style={{
                   overflowY: "auto",
