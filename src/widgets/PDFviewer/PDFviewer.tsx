@@ -54,13 +54,12 @@ export const PdfViewer = () => {
   return (
     <div ref={containerRef} className={styles.container}>
       {isMobile && isPortrait ? (
-        <div>
+        <div className={styles.scrollArea}>
           <TransformWrapper
             wheel={{ disabled: true }} // отключаем колесо мыши, если оно мешает
             pinch={{ disabled: true }}
             doubleClick={{ disabled: true }}
             panning={{ disabled: false }}
-            initialScale={1.1}
           >
             <TransformComponent
               wrapperStyle={{
