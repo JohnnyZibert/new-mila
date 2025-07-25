@@ -13,7 +13,7 @@ export const DocumentContent = ({ title }: Props) => {
       <div className={styles.header}>
         <Title className={styles.title} level={5}>
           {title}
-        </Title>{" "}
+        </Title>
         <RotateRightOutlined
           className={styles.rotateDevice}
           width={50}
