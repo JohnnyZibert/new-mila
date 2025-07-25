@@ -56,23 +56,28 @@ export const PdfViewer = () => {
       {isMobile && isPortrait ? (
         <div>
           <TransformWrapper
-          // options={{ maxScale: 5, minScale: 0.5 }}
-          // pinch={{ disabled: true }}
-          // doubleClick={{ disabled: true }}
-          // wheel={{ step: 0.1 }}
+            wheel={{ disabled: true }} // отключаем колесо мыши, если оно мешает
+            pinch={{ disabled: false }}
+            doubleClick={{ disabled: true }}
+            panning={{ disabled: false }}
+            initialScale={1.1}
           >
-            <TransformComponent>
+            <TransformComponent
+              wrapperStyle={{
+                touchAction: "pan-y pinch-zoom", // включаем вертикальный скролл + pinch
+              }}
+            >
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
+                  overflowY: "auto",
+                  overscrollBehavior: "contain",
                 }}
               >
                 <Document
                   file={myPDF}
                   onLoadSuccess={onDocumentLoadSuccess}
                   loading="Загрузка PDF..."
+                  className={styles.pdf}
                 >
                   {Array.from({ length: numPages }, (_, index) => (
                     <Page
