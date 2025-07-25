@@ -33,6 +33,10 @@ export const Layout = () => {
     }
   };
 
+  const textBtnAgreements = isPdnPage
+    ? "Согласен"
+    : "Присоединяюсь к соглашению";
+
   return (
     <div className={styles.container} key={location.pathname}>
       {/*<HeaderApp />*/}
@@ -42,7 +46,7 @@ export const Layout = () => {
       {!isDocumentPage && (isPdnPage || isEdoPage) ? (
         <div className={styles.wrapper}>
           <ConsentMenuButton
-            textButton={"Подписать"}
+            textButton={textBtnAgreements}
             handleOnClick={handleOnClickSignature}
             classNameBtn={styles.agreeBtn}
           />
