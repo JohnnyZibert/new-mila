@@ -2,9 +2,10 @@ import styles from "./DocumentContent.module.scss";
 import { PdfViewer } from "../../widgets/PDFviewer/PDFviewer.tsx";
 import Title from "antd/lib/typography/Title";
 import { RotateRightOutlined } from "@ant-design/icons";
+import type { ReactNode } from "react";
 
 interface Props {
-  title?: string;
+  title?: string | ReactNode;
 }
 
 export const DocumentContent = ({ title }: Props) => {
