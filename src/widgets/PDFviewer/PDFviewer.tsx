@@ -57,7 +57,7 @@ export const PdfViewer = () => {
         <div>
           <TransformWrapper
             wheel={{ disabled: true }} // отключаем колесо мыши, если оно мешает
-            pinch={{ disabled: false }}
+            pinch={{ disabled: true }}
             doubleClick={{ disabled: true }}
             panning={{ disabled: false }}
             initialScale={1.1}
