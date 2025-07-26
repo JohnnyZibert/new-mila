@@ -18,6 +18,8 @@
 
 .agreeBtn {
   height: 44px;
+  transform: scale(1);
+  touch-action: manipulation;
 }
 
 .wrapperBtn {
