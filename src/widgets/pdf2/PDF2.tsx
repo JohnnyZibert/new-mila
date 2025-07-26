@@ -8,6 +8,7 @@ import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
 export const PdfViewer2 = () => {
   const zoomPluginInstance = zoomPlugin();
   const toolbarPluginInstance = toolbarPlugin();
+  const { Toolbar } = toolbarPluginInstance;
   return (
     <div
       style={{
@@ -19,9 +20,12 @@ export const PdfViewer2 = () => {
       }}
     >
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+        <div style={{ borderBottom: "1px solid #eee" }}>
+          <Toolbar />
+        </div>
         <Viewer
           fileUrl={"/pdf/Obrazec.pdf"}
-          plugins={[toolbarPluginInstance, zoomPluginInstance]}
+          plugins={[zoomPluginInstance]}
           defaultScale={SpecialZoomLevel.PageWidth}
         />
       </Worker>
