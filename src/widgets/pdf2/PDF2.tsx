@@ -7,7 +7,7 @@ import styles from "./PDFviewer.module.scss";
 
 pdfjs.GlobalWorkerOptions.workerSrc = worker;
 
-export const PdfViewer = () => {
+export const PdfViewer2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(800);
   const [numPages, setNumPages] = useState<number>(0);
