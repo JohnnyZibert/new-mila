@@ -1,0 +1,16 @@
+// PDFviewer.module.scss
+
+.pdfWrapper {
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  touch-action: manipulation; // разрешает зум pinch на мобильных
+  // Для плавности
+  scroll-behavior: smooth;
+
+  // Отключим зум всей страницы
+  @media (max-width: 768px) {
+    overscroll-behavior-y: contain;
+  }
+}

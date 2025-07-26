@@ -1,8 +1,8 @@
 import styles from "./DocumentContent.module.scss";
-import { PdfViewer } from "../../widgets/PDFviewer/PDFviewer.tsx";
 import Title from "antd/lib/typography/Title";
 import { RotateRightOutlined } from "@ant-design/icons";
 import type { ReactNode } from "react";
+import { PdfViewer2 } from "../../widgets/pdf2/PDF2.tsx";
 
 interface Props {
   title?: string | ReactNode;
@@ -24,7 +24,7 @@ export const DocumentContent = ({ title }: Props) => {
       {/*<Title className={styles.title} level={5}>*/}
       {/*  {title}*/}
       {/*</Title>*/}
-      <PdfViewer />
+      <PdfViewer2 />
     </div>
   );
 };
