@@ -3,8 +3,10 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { useGesture } from "@use-gesture/react";
 import { animated } from "@react-spring/web";
 import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
+import worker from "../../worker/pdf.worker.min.mjs?url";
+import "react-pdf/dist/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = worker;
 
 export const PdfViewer2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,12 +61,7 @@ export const PdfViewer2 = () => {
         loading="Загрузка документа..."
       >
         {Array.from({ length: numPages }, (_, i) => (
-          <Page
-            key={i}
-            pageNumber={i + 1}
-            width={600}
-            renderAnnotationLayer={false}
-          />
+          <Page key={i} pageNumber={i + 1} renderAnnotationLayer={false} />
         ))}
       </Document>
     </animated.div>
