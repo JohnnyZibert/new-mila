@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { useGesture } from "@use-gesture/react";
 import { animated } from "@react-spring/web";
@@ -8,11 +8,7 @@ import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-type PdfViewerProps = {
-  file: string; // путь к PDF-файлу
-};
-
-export const PdfViewer2: React.FC<PdfViewerProps> = () => {
+export const PdfViewer2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [numPages, setNumPages] = useState(0);
   const [scale, setScale] = useState(1);
