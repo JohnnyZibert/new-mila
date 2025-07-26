@@ -1,69 +1,30 @@
-import { useState, useRef, useEffect } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import { useGesture } from "@use-gesture/react";
-import { animated } from "@react-spring/web";
-import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
-import worker from "../../worker/pdf.worker.min.mjs?url";
-import "react-pdf/dist/Page/TextLayer.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = worker;
+import { Worker, Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+import { zoomPlugin } from "@react-pdf-viewer/zoom";
+import "@react-pdf-viewer/toolbar/lib/styles/index.css";
+import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
 
 export const PdfViewer2 = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [numPages, setNumPages] = useState(0);
-  const [scale, setScale] = useState(1);
-
-  // Обработка pinch-жеста
-  const bind = useGesture({
-    onPinch: ({ offset: [distance] }) => {
-      const newScale = Math.min(Math.max(1 + distance / 200, 0.5), 3);
-      setScale(newScale);
-    },
-  });
-
-  // Скролл страницы при достижении края документа
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      const atTop = el.scrollTop === 0 && e.deltaY < 0;
-      const atBottom =
-        el.scrollTop + el.clientHeight >= el.scrollHeight && e.deltaY > 0;
-
-      if (atTop || atBottom) {
-        e.preventDefault();
-        window.scrollBy(0, e.deltaY);
-      }
-    };
-
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    return () => el.removeEventListener("wheel", handleWheel);
-  }, []);
-
+  const zoomPluginInstance = zoomPlugin();
+  const toolbarPluginInstance = toolbarPlugin();
   return (
-    <animated.div
-      {...bind()}
-      ref={containerRef}
+    <div
       style={{
-        overflowY: "auto",
-        maxHeight: "90vh",
-        transform: `scale(${scale})`,
-        transformOrigin: "top center",
-        border: "1px solid #ccc",
-        padding: "10px",
-        background: "#fff",
+        height: "100vh",
+        width: "100%", // важно!
+        overflow: "auto",
+        touchAction: "manipulation",
+        WebkitOverflowScrolling: "touch",
       }}
     >
-      <Document
-        file={myPDF}
-        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-        loading="Загрузка документа..."
-      >
-        {Array.from({ length: numPages }, (_, i) => (
-          <Page key={i} pageNumber={i + 1} renderAnnotationLayer={false} />
-        ))}
-      </Document>
-    </animated.div>
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+        <Viewer
+          fileUrl={"/pdf/Obrazec.pdf"}
+          plugins={[toolbarPluginInstance, zoomPluginInstance]}
+          defaultScale={SpecialZoomLevel.PageWidth}
+        />
+      </Worker>
+    </div>
   );
 };
