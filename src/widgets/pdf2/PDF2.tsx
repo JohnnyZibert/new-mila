@@ -63,19 +63,17 @@ export const PdfViewer2 = () => {
 
   return (
     <div ref={containerRef} className={styles.pdfWrapper}>
-      <div className={styles.zoomable}>
-        <Document file={myPDF} onLoadSuccess={onDocumentLoadSuccess}>
-          {Array.from({ length: numPages }, (_, index) => (
-            <Page
-              key={index}
-              pageNumber={index + 1}
-              width={width}
-              renderAnnotationLayer={false}
-              renderTextLayer={true}
-            />
-          ))}
-        </Document>
-      </div>
+      <Document file={myPDF} onLoadSuccess={onDocumentLoadSuccess}>
+        {Array.from({ length: numPages }, (_, index) => (
+          <Page
+            key={index}
+            pageNumber={index + 1}
+            width={width}
+            renderAnnotationLayer={false}
+            renderTextLayer={true}
+          />
+        ))}
+      </Document>
     </div>
   );
 };
