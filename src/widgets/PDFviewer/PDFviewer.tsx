@@ -17,8 +17,8 @@ export const PdfViewer = () => {
 
   const bind = useGesture(
     {
-      onPinch: ({ da: [d] }) => {
-        const newScale = Math.max(0.5, Math.min(3, scale * d));
+      onPinch: ({ offset: [d] }) => {
+        const newScale = Math.max(0.5, Math.min(3, 1 + d / 100));
         setScale(newScale);
       },
       onDrag: ({ offset: [x, y] }) => {
@@ -35,6 +35,7 @@ export const PdfViewer = () => {
         // @ts-ignore
         scaleBounds: { min: 0.5, max: 3 },
         rubberband: true,
+        from: () => [scale],
       },
       target: containerRef,
       eventOptions: { passive: false },
