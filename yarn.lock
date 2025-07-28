@@ -1081,7 +1081,7 @@
 
 "@react-spring/web@^10.0.1":
   version "10.0.1"
-  resolved "https://registry.npmjs.org/@react-spring/web/-/web-10.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/@react-spring/web/-/web-10.0.1.tgz#5136954463290988280d1fe8314ac02ebd2c251d"
   integrity sha512-FgQk02OqFrYyJBTTnBTWAU0WPzkHkKXauc6aeexcvATvLapUxwnfGuLlsLYF8BYjEVfkivPT04ziAue6zyRBtQ==
   dependencies:
     "@react-spring/animated" "~10.0.1"
