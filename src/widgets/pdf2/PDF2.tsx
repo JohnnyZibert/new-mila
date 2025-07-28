@@ -30,7 +30,7 @@ export const PdfViewer2 = () => {
     <div
       style={{
         overflow: "hidden",
-        width: "80%",
+        width: "100%",
         height: "100vh",
         // WebkitOverflowScrolling: "touch",
       }}
@@ -42,6 +42,7 @@ export const PdfViewer2 = () => {
           touchAction: "none",
           left: `${crop.x}`,
           top: `${crop.y}`,
+          overflow: "auto",
           transform: `scale(${crop.scale})`,
         }}
         ref={docRef}
