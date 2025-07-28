@@ -33,7 +33,7 @@ export const PdfViewer2 = () => {
       </div>
       <div
         style={{
-          overflow: "auto",
+          overflow: "hidden",
           width: "100%",
           height: "100vh",
           left: `${crop.x}`,
