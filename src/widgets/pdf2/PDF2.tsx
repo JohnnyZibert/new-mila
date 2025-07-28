@@ -12,9 +12,6 @@ export const PdfViewer2 = () => {
   const docRef = useRef(null);
   useGesture(
     {
-      onDrag: ({ offset: [dx, dy] }) => {
-        setCrop((crop) => ({ ...crop, x: dx, y: dy }));
-      },
       onPinch: ({ offset: [d] }) => {
         setCrop((crop) => ({ ...crop, scale: 1 + d / 50 }));
       },
@@ -31,12 +28,9 @@ export const PdfViewer2 = () => {
   // const { Toolbar } = toolbarPluginInstance;
   return (
     <>
-      <div>
-        x: {crop.x}, y={crop.y}
-      </div>
       <div
         style={{
-          overflow: "hidden",
+          overflow: "auto",
           width: "100%",
           height: "100vh",
           WebkitOverflowScrolling: "touch",
@@ -46,7 +40,6 @@ export const PdfViewer2 = () => {
           style={{
             width: "100%",
             height: "100vh",
-            transformOrigin: "top left",
             transform: `scale(${crop.scale})`,
             position: "relative",
             touchAction: "none",
