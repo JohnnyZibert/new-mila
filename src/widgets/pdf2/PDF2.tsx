@@ -16,7 +16,7 @@ export const PdfViewer2 = () => {
         setCrop((crop) => ({ ...crop, x: dx, y: dy }));
       },
       onPinch: ({ offset: [d] }) => {
-        setCrop((crop) => ({ ...crop, scale: 1 + d }));
+        setCrop((crop) => ({ ...crop, scale: 1 + d / 50 }));
       },
     },
     { target: docRef, eventOptions: { passive: false } },
