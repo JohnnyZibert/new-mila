@@ -15,6 +15,9 @@ export const PdfViewer = () => {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  const clamp = (value: number, min: number, max: number) =>
+    Math.min(Math.max(value, min), max);
+
   const bind = useGesture(
     {
       onPinch: ({ movement: [d] }) => {
@@ -22,7 +25,24 @@ export const PdfViewer = () => {
         setScale(newScale);
       },
       onDrag: ({ offset: [x, y] }) => {
-        setPosition({ x, y });
+        const container = containerRef.current;
+        if (!container) return;
+
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        const contentWidth = containerWidth * scale;
+        const contentHeight = containerHeight * scale;
+
+        const maxX = 0;
+        const maxY = 0;
+        const minX = Math.min(containerWidth - contentWidth, 0);
+        const minY = Math.min(containerHeight - contentHeight, 0);
+
+        setPosition({
+          x: clamp(x, minX, maxX),
+          y: clamp(y, minY, maxY),
+        });
       },
     },
     {
