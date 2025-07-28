@@ -17,8 +17,8 @@ export const PdfViewer = () => {
 
   const bind = useGesture(
     {
-      onPinch: ({ offset: [d] }) => {
-        const nextScale = Math.min(Math.max(0.5, 1 + d / 100), 3); // clamp zoom
+      onPinch: ({ da: [d] }) => {
+        const nextScale = Math.min(Math.max(0.5, scale * d), 3);
         setScale(nextScale);
       },
       onDrag: ({ offset: [x, y] }) => {
