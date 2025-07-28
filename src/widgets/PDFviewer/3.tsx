@@ -9,6 +9,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = worker;
 
 export const PdfViewer = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [numPages, setNumPages] = useState(0);
 
@@ -18,45 +19,46 @@ export const PdfViewer = () => {
 
   return (
     <div
-      ref={containerRef}
+      ref={scrollRef}
       className={styles.container}
       style={{
         width: "100%",
-        height: "100%",
-        overflow: "hidden",
-        touchAction: "none",
+        height: "100vh", // позволяет прокручивать
+        overflow: "auto", // включаем scroll
         position: "relative",
       }}
     >
-      <TransformWrapper
-        minScale={1}
-        maxScale={3}
-        wheel={{ disabled: false }}
-        pinch={{ disabled: false }}
-        doubleClick={{ disabled: true }}
-        panning={{ disabled: false }}
-        limitToBounds={true}
-        centerOnInit
-      >
-        <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
-          <Document
-            file={myPDF}
-            onLoadSuccess={onDocumentLoadSuccess}
-            loading="Загрузка PDF..."
-          >
-            {Array.from({ length: numPages }, (_, index) => (
-              <Page
-                key={index}
-                pageNumber={index + 1}
-                width={containerRef.current?.offsetWidth}
-                renderAnnotationLayer={false}
-                renderTextLayer={true}
-                renderMode="canvas"
-              />
-            ))}
-          </Document>
-        </TransformComponent>
-      </TransformWrapper>
+      <div ref={containerRef}>
+        <TransformWrapper
+          minScale={1}
+          maxScale={3}
+          wheel={{ disabled: false }}
+          pinch={{ disabled: false }}
+          doubleClick={{ disabled: true }}
+          panning={{ disabled: false }}
+          limitToBounds={true}
+          centerOnInit
+        >
+          <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+            <Document
+              file={myPDF}
+              onLoadSuccess={onDocumentLoadSuccess}
+              loading="Загрузка PDF..."
+            >
+              {Array.from({ length: numPages }, (_, index) => (
+                <Page
+                  key={index}
+                  pageNumber={index + 1}
+                  width={containerRef.current?.offsetWidth}
+                  renderAnnotationLayer={false}
+                  renderTextLayer={true}
+                  renderMode="canvas"
+                />
+              ))}
+            </Document>
+          </TransformComponent>
+        </TransformWrapper>
+      </div>
     </div>
   );
 };
