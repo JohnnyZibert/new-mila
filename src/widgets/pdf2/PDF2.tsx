@@ -30,10 +30,9 @@ export const PdfViewer2 = () => {
     <>
       <div
         style={{
-          overflow: "auto",
+          overflow: "scroll",
           width: "100%",
           height: "100vh",
-          WebkitOverflowScrolling: "touch",
         }}
       >
         <div
