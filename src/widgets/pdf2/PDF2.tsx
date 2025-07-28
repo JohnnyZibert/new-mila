@@ -12,12 +12,15 @@ export const PdfViewer2 = () => {
   const docRef = useRef(null);
   useGesture(
     {
+      onDrag: ({ offset: [dx, dy] }) => {
+        setCrop((crop) => ({ ...crop, x: dx, y: dy }));
+      },
       onPinch: ({ offset: [d] }) => {
         setCrop((crop) => ({ ...crop, scale: 1 + d / 50 }));
       },
     },
     {
-      domTarget: docRef as unknown as EventTarget | undefined,
+      domTarget: docRef as unknown as EventTarget,
       eventOptions: { passive: false },
     },
   );
@@ -27,36 +30,44 @@ export const PdfViewer2 = () => {
 
   // const { Toolbar } = toolbarPluginInstance;
   return (
-    <div
-      style={{
-        overflow: "auto",
-        width: "100%",
-        height: "100vh",
-        // WebkitOverflowScrolling: "touch",
-      }}
-    >
+    <>
+      <div>
+        x: {crop.x}, y={crop.y}
+      </div>
       <div
         style={{
-          transform: `scale(${crop.scale})`,
-          touchAction: "none",
-          position: "relative",
+          overflow: "hidden",
+          width: "100%",
+          height: "100vh",
+          // WebkitOverflowScrolling: "touch",
         }}
-        ref={docRef}
       >
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          {/*<div>*/}
-          {/*  <Toolbar />*/}
-          {/*</div>*/}
-          {/*<PinchToZoom>*/}
+        <div
+          style={{
+            width: "100%",
+            height: "100vh",
+            transformOrigin: "top left",
+            transform: `scale(${crop.scale})`,
+            position: "relative",
+            touchAction: "none",
+          }}
+          ref={docRef}
+        >
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            {/*<div>*/}
+            {/*  <Toolbar />*/}
+            {/*</div>*/}
+            {/*<PinchToZoom>*/}
 
-          <Viewer
-            fileUrl={"/pdf/Obrazec.pdf"}
-            // plugins={[zoomPluginInstance, toolbarPluginInstance]}
-            defaultScale={SpecialZoomLevel.PageWidth}
-          />
-          {/*</PinchToZoom>*/}
-        </Worker>
+            <Viewer
+              fileUrl={"/pdf/Obrazec.pdf"}
+              // plugins={[zoomPluginInstance, toolbarPluginInstance]}
+              defaultScale={SpecialZoomLevel.PageWidth}
+            />
+            {/*</PinchToZoom>*/}
+          </Worker>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
