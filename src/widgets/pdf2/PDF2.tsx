@@ -43,6 +43,7 @@ export const PdfViewer2 = () => {
           height: "100vh",
           touchAction: "none",
           transform: `scale(${crop.scale})`,
+          overflowY: "auto",
         }}
         ref={docRef}
       >
