@@ -20,7 +20,7 @@ export const PdfViewer = () => {
 
   const bind = useGesture(
     {
-      onPinch: ({ movement: [d] }) => {
+      onPinch: ({ offset: [d] }) => {
         const newScale = Math.max(1, Math.min(3, 1 + d / 100));
         setScale(newScale);
       },
