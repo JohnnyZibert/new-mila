@@ -27,41 +27,46 @@ export const PdfViewer2 = () => {
 
   // const { Toolbar } = toolbarPluginInstance;
   return (
-    <div
-      style={{
-        overflow: "hidden",
-        width: "100%",
-        height: "100vh",
-        // WebkitOverflowScrolling: "touch",
-      }}
-    >
+    <>
+      <div>
+        x: {crop.x}, y={crop.y}
+      </div>
       <div
         style={{
+          overflow: "hidden",
           width: "100%",
           height: "100vh",
-          touchAction: "none",
-          left: `${crop.x}`,
-          top: `${crop.y}`,
-          overflow: "auto",
-          transform: `scale(${crop.scale})`,
-          position: "relative",
+          // WebkitOverflowScrolling: "touch",
         }}
-        ref={docRef}
       >
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          {/*<div>*/}
-          {/*  <Toolbar />*/}
-          {/*</div>*/}
-          {/*<PinchToZoom>*/}
+        <div
+          style={{
+            width: "100%",
+            height: "100vh",
+            touchAction: "none",
+            left: `${crop.x}`,
+            top: `${crop.y}`,
+            // overflow: "auto",
+            transform: `scale(${crop.scale})`,
+            position: "relative",
+          }}
+          ref={docRef}
+        >
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            {/*<div>*/}
+            {/*  <Toolbar />*/}
+            {/*</div>*/}
+            {/*<PinchToZoom>*/}
 
-          <Viewer
-            fileUrl={"/pdf/Obrazec.pdf"}
-            // plugins={[zoomPluginInstance, toolbarPluginInstance]}
-            defaultScale={SpecialZoomLevel.PageWidth}
-          />
-          {/*</PinchToZoom>*/}
-        </Worker>
+            <Viewer
+              fileUrl={"/pdf/Obrazec.pdf"}
+              // plugins={[zoomPluginInstance, toolbarPluginInstance]}
+              defaultScale={SpecialZoomLevel.PageWidth}
+            />
+            {/*</PinchToZoom>*/}
+          </Worker>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
