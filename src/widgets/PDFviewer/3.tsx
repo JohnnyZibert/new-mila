@@ -22,7 +22,7 @@ export const PdfViewer = () => {
       className={styles.container}
       style={{
         width: "100%",
-        height: "100vh",
+        height: "75vh",
         // touchAction: "none",
         position: "relative",
         // overflowY: "scroll", // ✅ вертикальный scroll
@@ -46,7 +46,7 @@ export const PdfViewer = () => {
         centerOnInit
       >
         <TransformComponent
-          wrapperStyle={{ width: "100%", height: "100vh", overflow: "auto" }}
+          wrapperStyle={{ width: "100%", height: "100%", overflow: "auto" }}
         >
           <Document
             file={myPDF}
