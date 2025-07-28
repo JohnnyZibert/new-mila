@@ -12,11 +12,9 @@ export const PdfViewer2 = () => {
   const docRef = useRef(null);
   useGesture(
     {
-      onDrag:
-        () =>
-        ({ offset: [dx, dy] }: { offset: [number, number] }) => {
-          setCrop((crop) => ({ ...crop, x: dx, y: dy }));
-        },
+      onDrag: ({ offset: [dx, dy] }: { offset: [number, number] }) => {
+        setCrop((crop) => ({ ...crop, x: dx, y: dy }));
+      },
       onPinch: ({ offset: [d] }) => {
         setCrop((crop) => ({ ...crop, scale: 1 + d }));
       },
@@ -43,7 +41,6 @@ export const PdfViewer2 = () => {
           height: "100vh",
           touchAction: "none",
           transform: `scale(${crop.scale})`,
-          overflowY: "auto",
         }}
         ref={docRef}
       >
