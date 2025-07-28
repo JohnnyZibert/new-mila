@@ -25,10 +25,10 @@ export const PdfViewer = () => {
         height: "100vh",
         // touchAction: "none",
         position: "relative",
-        overflowY: "scroll", // ✅ вертикальный scroll
-        overflowX: "hidden",
+        // overflowY: "scroll", // ✅ вертикальный scroll
+        // overflowX: "hidden",
         WebkitOverflowScrolling: "touch", // для iOS плавного scroll
-        touchAction: "pan-y",
+        // touchAction: "pan-y",
       }}
     >
       <TransformWrapper
@@ -37,15 +37,17 @@ export const PdfViewer = () => {
         wheel={{ disabled: false }}
         pinch={{ disabled: false }}
         doubleClick={{ disabled: true }}
-        panning={{
-          disabled: false,
-          lockAxisX: false, // разрешить drag по X
-          lockAxisY: true, // ❗️запретить drag по Y (чтобы работал scroll)
-        }}
+        // panning={{
+        //   disabled: false,
+        //   lockAxisX: false, // разрешить drag по X
+        //   lockAxisY: true, // ❗️запретить drag по Y (чтобы работал scroll)
+        // }}
         limitToBounds={true}
         centerOnInit
       >
-        <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+        <TransformComponent
+          wrapperStyle={{ width: "100%", height: "100vh", overflow: "auto" }}
+        >
           <Document
             file={myPDF}
             onLoadSuccess={onDocumentLoadSuccess}
