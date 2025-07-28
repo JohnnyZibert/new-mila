@@ -4,6 +4,7 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { zoomPlugin } from "@react-pdf-viewer/zoom";
 import "@react-pdf-viewer/toolbar/lib/styles/index.css";
 import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
+import { PinchToZoom } from "./Pinch.tsx";
 
 export const PdfViewer2 = () => {
   const zoomPluginInstance = zoomPlugin({ enableShortcuts: true });
@@ -25,11 +26,13 @@ export const PdfViewer2 = () => {
         <div>
           <Toolbar />
         </div>
-        <Viewer
-          fileUrl={"/pdf/Obrazec.pdf"}
-          plugins={[zoomPluginInstance, toolbarPluginInstance]}
-          defaultScale={SpecialZoomLevel.PageWidth}
-        />
+        <PinchToZoom>
+          <Viewer
+            fileUrl={"/pdf/Obrazec.pdf"}
+            plugins={[zoomPluginInstance, toolbarPluginInstance]}
+            defaultScale={SpecialZoomLevel.PageWidth}
+          />
+        </PinchToZoom>
       </Worker>
     </div>
   );
