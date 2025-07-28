@@ -2,7 +2,7 @@ import styles from "./DocumentContent.module.scss";
 import Title from "antd/lib/typography/Title";
 import { RotateRightOutlined } from "@ant-design/icons";
 import type { ReactNode } from "react";
-import { PdfViewer } from "../../widgets/PDFviewer/PDFviewer.tsx";
+import { PdfViewer } from "../../widgets/PDFviewer/3.tsx";
 
 interface Props {
   title?: string | ReactNode;
