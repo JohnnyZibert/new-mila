@@ -25,7 +25,7 @@ export const PdfViewer = () => {
         height: "100vh",
         // touchAction: "none",
         position: "relative",
-        overflowY: "auto", // ✅ вертикальный scroll
+        overflowY: "scroll", // ✅ вертикальный scroll
         overflowX: "hidden",
         WebkitOverflowScrolling: "touch", // для iOS плавного scroll
         touchAction: "pan-y",
