@@ -58,21 +58,9 @@ export const PdfViewer = () => {
         from: () => [scale],
       },
       target: containerRef,
-      eventOptions: { passive: false },
+      eventOptions: { passive: false, capture: true },
     },
   );
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const preventTouchZoom = (e: TouchEvent) => {
-      if (e.touches.length > 1) e.preventDefault();
-    };
-    el.addEventListener("touchmove", preventTouchZoom, { passive: false });
-    return () => {
-      el.removeEventListener("touchmove", preventTouchZoom);
-    };
-  }, []);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
