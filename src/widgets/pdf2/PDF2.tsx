@@ -44,6 +44,7 @@ export const PdfViewer2 = () => {
           top: `${crop.y}`,
           overflow: "auto",
           transform: `scale(${crop.scale})`,
+          position: "relative",
         }}
         ref={docRef}
       >
