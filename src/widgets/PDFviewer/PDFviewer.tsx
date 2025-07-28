@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
 import worker from "../../worker/pdf.worker.min.mjs?url";
