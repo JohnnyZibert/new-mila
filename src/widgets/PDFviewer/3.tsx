@@ -23,9 +23,12 @@ export const PdfViewer = () => {
       style={{
         width: "100%",
         height: "100vh",
-        overflow: "scroll",
-        touchAction: "none",
+        // touchAction: "none",
         position: "relative",
+        overflowY: "auto", // ✅ вертикальный scroll
+        overflowX: "hidden",
+        WebkitOverflowScrolling: "touch", // для iOS плавного scroll
+        touchAction: "pan-y",
       }}
     >
       <TransformWrapper
@@ -34,7 +37,11 @@ export const PdfViewer = () => {
         wheel={{ disabled: false }}
         pinch={{ disabled: false }}
         doubleClick={{ disabled: true }}
-        panning={{ disabled: false }}
+        panning={{
+          disabled: false,
+          lockAxisX: false, // разрешить drag по X
+          lockAxisY: true, // ❗️запретить drag по Y (чтобы работал scroll)
+        }}
         limitToBounds={true}
         centerOnInit
       >
