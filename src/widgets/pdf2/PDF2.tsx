@@ -33,9 +33,11 @@ export const PdfViewer2 = () => {
       </div>
       <div
         style={{
-          overflow: "hidden",
+          overflow: "auto",
           width: "100%",
           height: "100vh",
+          left: `${crop.x}`,
+          top: `${crop.y}`,
           // WebkitOverflowScrolling: "touch",
         }}
       >
@@ -43,11 +45,8 @@ export const PdfViewer2 = () => {
           style={{
             width: "100%",
             height: "100vh",
-            touchAction: "none",
-            left: `${crop.x}`,
-            top: `${crop.y}`,
-            // overflow: "auto",
-            transform: `scale(${crop.scale})`,
+            transform: `translate(${crop.x}px, ${crop.y}px) scale(${crop.scale})`,
+            transformOrigin: "center center",
             position: "relative",
           }}
           ref={docRef}
