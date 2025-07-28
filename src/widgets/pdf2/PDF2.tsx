@@ -31,27 +31,35 @@ export const PdfViewer2 = () => {
   return (
     <div
       style={{
-        height: "100vh",
-        width: "100%", // важно!
         overflow: "hidden",
-        touchAction: "none",
+        width: "100%",
+        height: "100vh",
         // WebkitOverflowScrolling: "touch",
-        transform: `scale(${crop.scale})`,
       }}
-      ref={docRef}
     >
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        {/*<div>*/}
-        {/*  <Toolbar />*/}
-        {/*</div>*/}
-        {/*<PinchToZoom>*/}
-        <Viewer
-          fileUrl={"/pdf/Obrazec.pdf"}
-          // plugins={[zoomPluginInstance, toolbarPluginInstance]}
-          defaultScale={SpecialZoomLevel.PageWidth}
-        />
-        {/*</PinchToZoom>*/}
-      </Worker>
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          touchAction: "none",
+          transform: `scale(${crop.scale})`,
+        }}
+        ref={docRef}
+      >
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+          {/*<div>*/}
+          {/*  <Toolbar />*/}
+          {/*</div>*/}
+          {/*<PinchToZoom>*/}
+
+          <Viewer
+            fileUrl={"/pdf/Obrazec.pdf"}
+            // plugins={[zoomPluginInstance, toolbarPluginInstance]}
+            defaultScale={SpecialZoomLevel.PageWidth}
+          />
+          {/*</PinchToZoom>*/}
+        </Worker>
+      </div>
     </div>
   );
 };
