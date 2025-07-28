@@ -38,6 +38,7 @@ export const PdfViewer2 = () => {
         WebkitOverflowScrolling: "touch",
         transform: `scale(${crop.scale})`,
       }}
+      ref={docRef}
     >
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
         {/*<div>*/}
@@ -48,7 +49,6 @@ export const PdfViewer2 = () => {
           fileUrl={"/pdf/Obrazec.pdf"}
           // plugins={[zoomPluginInstance, toolbarPluginInstance]}
           defaultScale={SpecialZoomLevel.PageWidth}
-          ref={docRef}
         />
         {/*</PinchToZoom>*/}
       </Worker>
