@@ -4,22 +4,25 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 // import { zoomPlugin } from "@react-pdf-viewer/zoom";
 import "@react-pdf-viewer/toolbar/lib/styles/index.css";
 // import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
-import { useGesture } from "@use-gesture/react";
 import { useRef, useState } from "react";
+import { useGesture } from "react-use-gesture";
 
 export const PdfViewer2 = () => {
   const [crop, setCrop] = useState({ x: 0, y: 0, scale: 1 });
   const docRef = useRef(null);
   useGesture(
     {
-      onDrag: ({ offset: [dx, dy] }: { offset: [number, number] }) => {
+      onDrag: ({ offset: [dx, dy] }) => {
         setCrop((crop) => ({ ...crop, x: dx, y: dy }));
       },
       onPinch: ({ offset: [d] }) => {
-        setCrop((crop) => ({ ...crop, scale: 1 + d }));
+        setCrop((crop) => ({ ...crop, scale: 1 + d / 50 }));
       },
     },
-    { target: docRef, eventOptions: { passive: false } },
+    {
+      domTarget: docRef as unknown as EventTarget | undefined,
+      eventOptions: { passive: false },
+    },
   );
   // const zoomPluginInstance = zoomPlugin({ enableShortcuts: true });
 
@@ -41,14 +44,11 @@ export const PdfViewer2 = () => {
       >
         <div
           style={{
-            width: "100%",
-            height: "100vh",
-            transformOrigin: "top left",
-            top: crop.y,
             left: crop.x,
+            top: crop.y,
             transform: `scale(${crop.scale})`,
-            position: "relative",
             touchAction: "none",
+            position: "relative",
           }}
           ref={docRef}
         >
