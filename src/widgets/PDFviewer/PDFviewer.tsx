@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
 import worker from "../../worker/pdf.worker.min.mjs?url";
@@ -18,8 +18,8 @@ export const PdfViewer = () => {
   const bind = useGesture(
     {
       onPinch: ({ da: [d] }) => {
-        const nextScale = Math.min(Math.max(0.5, scale * d), 3);
-        setScale(nextScale);
+        const newScale = Math.max(0.5, Math.min(3, scale * d));
+        setScale(newScale);
       },
       onDrag: ({ offset: [x, y] }) => {
         setPosition({ x, y });
@@ -40,6 +40,18 @@ export const PdfViewer = () => {
       eventOptions: { passive: false },
     },
   );
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const preventTouchZoom = (e: TouchEvent) => {
+      if (e.touches.length > 1) e.preventDefault();
+    };
+    el.addEventListener("touchmove", preventTouchZoom, { passive: false });
+    return () => {
+      el.removeEventListener("touchmove", preventTouchZoom);
+    };
+  }, []);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);

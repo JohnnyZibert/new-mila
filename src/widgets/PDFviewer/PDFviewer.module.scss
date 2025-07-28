@@ -15,14 +15,14 @@
 
   @media (max-width: 768px) {
     width: 100%;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    //overscroll-behavior: contain;
+    //-webkit-overflow-scrolling: touch;
   }
 }
 
 .scrollArea {
   max-height: 100vh;
   overflow-y: auto;
-  overscroll-behavior-y: auto; // 👈 ключ к "прозрачному" скроллу
-  -webkit-overflow-scrolling: touch;
+  //overscroll-behavior-y: auto; // 👈 ключ к "прозрачному" скроллу
+  //-webkit-overflow-scrolling: touch;
 }
