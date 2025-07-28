@@ -1,38 +1,56 @@
 import { SpecialZoomLevel, Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { zoomPlugin } from "@react-pdf-viewer/zoom";
+// import { zoomPlugin } from "@react-pdf-viewer/zoom";
 import "@react-pdf-viewer/toolbar/lib/styles/index.css";
-import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
-import { PinchToZoom } from "./Pinch.tsx";
+// import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
+import { useGesture } from "@use-gesture/react";
+import { useRef, useState } from "react";
 
 export const PdfViewer2 = () => {
-  const zoomPluginInstance = zoomPlugin({ enableShortcuts: true });
+  const [crop, setCrop] = useState({ x: 0, y: 0, scale: 1 });
+  const docRef = useRef(null);
+  useGesture(
+    {
+      onDrag:
+        () =>
+        ({ offset: [dx, dy] }: { offset: [number, number] }) => {
+          setCrop((crop) => ({ ...crop, x: dx, y: dy }));
+        },
+      onPinch: ({ offset: [d] }) => {
+        setCrop((crop) => ({ ...crop, scale: 1 + d / 50 }));
+      },
+    },
+    { target: docRef, eventOptions: { passive: false } },
+  );
+  // const zoomPluginInstance = zoomPlugin({ enableShortcuts: true });
 
-  const toolbarPluginInstance = toolbarPlugin();
+  // const toolbarPluginInstance = toolbarPlugin();
 
-  const { Toolbar } = toolbarPluginInstance;
+  // const { Toolbar } = toolbarPluginInstance;
   return (
     <div
       style={{
         height: "100vh",
         width: "100%", // важно!
         overflow: "auto",
-        touchAction: "manipulation",
+        touchAction: "none",
         WebkitOverflowScrolling: "touch",
+        transform: `scale(${crop.scale})`,
       }}
     >
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        <div>
-          <Toolbar />
-        </div>
-        <PinchToZoom>
-          <Viewer
-            fileUrl={"/pdf/Obrazec.pdf"}
-            plugins={[zoomPluginInstance, toolbarPluginInstance]}
-            defaultScale={SpecialZoomLevel.PageWidth}
-          />
-        </PinchToZoom>
+        {/*<div>*/}
+        {/*  <Toolbar />*/}
+        {/*</div>*/}
+        {/*<PinchToZoom>*/}
+        <Viewer
+          fileUrl={"/pdf/Obrazec.pdf"}
+          // plugins={[zoomPluginInstance, toolbarPluginInstance]}
+          defaultScale={SpecialZoomLevel.PageWidth}
+          ref={docRef}
+        />
+        {/*</PinchToZoom>*/}
       </Worker>
     </div>
   );
