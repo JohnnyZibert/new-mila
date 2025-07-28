@@ -45,8 +45,8 @@ export const PdfViewer2 = () => {
           style={{
             width: "100%",
             height: "100vh",
+            transformOrigin: "top left",
             transform: `translate(${crop.x}px, ${crop.y}px) scale(${crop.scale})`,
-            transformOrigin: "center center",
             position: "relative",
           }}
           ref={docRef}
