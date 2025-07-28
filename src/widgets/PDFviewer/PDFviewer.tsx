@@ -79,7 +79,7 @@ export const PdfViewer = () => {
           y: Math.max(minY, Math.min(0, dy)),
         });
       },
-      onPinch: ({ offset: [d], origin, memo }) => {
+      onPinch: ({ offset: [d], memo }) => {
         const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, 1 + d / 100));
         api.start({ scale: newScale });
         return memo;
