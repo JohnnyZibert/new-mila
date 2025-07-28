@@ -1,94 +1,90 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
-import "react-pdf/dist/Page/TextLayer.css";
 import worker from "../../worker/pdf.worker.min.mjs?url";
+import { useGesture } from "react-use-gesture";
 import styles from "./PDFviewer.module.scss";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import "react-pdf/dist/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = worker;
 
 export const PdfViewer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState<number>(800); // начальная ширина
-  const [numPages, setNumPages] = useState<number>(0);
-  const isPortrait = window.innerHeight > window.innerWidth;
-  const isMobile = window.innerWidth < 768;
-  // const scale = isPortrait && isMobile ? 1 : 1;
+  const [numPages, setNumPages] = useState(0);
 
-  const updateWidth = () => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth;
-      setWidth(containerWidth);
-    }
-  };
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  const bind = useGesture(
+    {
+      onPinch: ({ offset: [d] }) => {
+        const nextScale = Math.min(Math.max(0.5, 1 + d / 100), 3); // clamp zoom
+        setScale(nextScale);
+      },
+      onDrag: ({ offset: [x, y] }) => {
+        const container = containerRef.current;
+        if (!container) return;
 
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.contentRect) {
-          setWidth(entry.contentRect.width);
-        }
-      }
-    });
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
 
-    observer.observe(container);
+        const contentWidth = 800 * scale;
+        const contentHeight = numPages * 1100 * scale; // примерная высота всех страниц
 
-    return () => observer.disconnect();
-  }, []);
+        // Вычисляем границы
+        const maxX = 0;
+        const minX = Math.min(containerWidth - contentWidth, 0);
+
+        const maxY = 0;
+        const minY = Math.min(containerHeight - contentHeight, 0);
+
+        // Ограничиваем
+        const clampedX = Math.max(minX, Math.min(x, maxX));
+        const clampedY = Math.max(minY, Math.min(y, maxY));
+
+        setPosition({ x: clampedX, y: clampedY });
+      },
+    },
+    {
+      drag: {
+        // @ts-ignore
+        from: () => [position.x, position.y],
+        pointer: { touch: true },
+      },
+      pinch: {
+        // @ts-ignore
+        scaleBounds: { min: 0.5, max: 3 },
+        rubberband: true,
+      },
+      target: containerRef,
+      eventOptions: { passive: false },
+    },
+  );
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
   };
 
-  useEffect(() => {
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
-
   return (
-    <div ref={containerRef} className={styles.container}>
-      {isMobile && isPortrait ? (
-        <div className={styles.scrollArea}>
-          <TransformWrapper
-            wheel={{ disabled: true }} // отключаем колесо мыши, если оно мешает
-            pinch={{ disabled: false }}
-            doubleClick={{ disabled: false }}
-            panning={{ disabled: true }}
-          >
-            <TransformComponent>
-              <div
-                style={{
-                  overflowY: "auto",
-                  overscrollBehavior: "auto",
-                }}
-              >
-                <Document
-                  file={myPDF}
-                  onLoadSuccess={onDocumentLoadSuccess}
-                  loading="Загрузка PDF..."
-                  className={styles.pdf}
-                >
-                  {Array.from({ length: numPages }, (_, index) => (
-                    <Page
-                      key={index}
-                      pageNumber={index + 1}
-                      width={width}
-                      renderAnnotationLayer={false}
-                      renderTextLayer={true}
-                      renderMode="canvas"
-                    />
-                  ))}
-                </Document>
-              </div>
-            </TransformComponent>
-          </TransformWrapper>
-        </div>
-      ) : (
+    <div
+      ref={containerRef}
+      {...bind()}
+      className={styles.container}
+      style={{
+        width: "100%",
+        height: "100vh",
+        overflow: "hidden",
+        touchAction: "none",
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+          transformOrigin: "0 0",
+          transition: "transform 0.05s linear",
+        }}
+      >
         <Document
           file={myPDF}
           onLoadSuccess={onDocumentLoadSuccess}
@@ -98,14 +94,14 @@ export const PdfViewer = () => {
             <Page
               key={index}
               pageNumber={index + 1}
-              width={width}
+              width={800} // можно заменить на containerRef.current?.offsetWidth
               renderAnnotationLayer={false}
               renderTextLayer={true}
               renderMode="canvas"
             />
           ))}
         </Document>
-      )}
+      </div>
     </div>
   );
 };
