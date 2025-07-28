@@ -13,7 +13,7 @@ export const PdfViewer2 = () => {
   useGesture(
     {
       onDrag: ({ offset: [dx, dy] }: { offset: [number, number] }) => {
-        setCrop((crop) => ({ ...crop, x: dx * 2, y: dy * 2 }));
+        setCrop((crop) => ({ ...crop, x: dx * 5, y: dy * 5 }));
       },
       onPinch: ({ offset: [d] }) => {
         setCrop((crop) => ({ ...crop, scale: 1 + d }));
