@@ -39,7 +39,7 @@ export const PdfViewer2 = () => {
           overflow: "hidden",
           width: "100%",
           height: "100vh",
-          // WebkitOverflowScrolling: "touch",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         <div
