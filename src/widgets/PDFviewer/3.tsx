@@ -23,23 +23,28 @@ export const PdfViewer = () => {
       className={styles.container}
       style={{
         width: "100%",
-        height: "100vh", // позволяет прокручивать
-        overflow: "auto", // включаем scroll
-        position: "relative",
+        height: "100vh",
+        overflow: "auto", //
       }}
     >
       <div ref={containerRef}>
         <TransformWrapper
           minScale={1}
           maxScale={3}
-          wheel={{ disabled: false }}
+          wheel={{ disabled: true }}
           pinch={{ disabled: false }}
           doubleClick={{ disabled: true }}
-          panning={{ disabled: false }}
-          limitToBounds={true}
+          panning={{ disabled: true }}
+          limitToBounds={false}
           centerOnInit
         >
-          <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
+          <TransformComponent
+            wrapperStyle={{
+              width: "fit-content",
+              height: "fit-content",
+              margin: "auto",
+            }}
+          >
             <Document
               file={myPDF}
               onLoadSuccess={onDocumentLoadSuccess}
