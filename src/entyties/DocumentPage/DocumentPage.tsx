@@ -12,7 +12,6 @@ const { Paragraph, Title } = Typography;
 
 export const DocumentPage = () => {
   const isSignStatus = useAppStore((state) => state.isSignStatus);
-  // const setIsSignStatus = useAppStore().setIsSignStatus;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {

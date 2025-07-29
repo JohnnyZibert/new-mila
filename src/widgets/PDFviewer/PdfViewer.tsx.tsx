@@ -3,7 +3,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import myPDF from "../../shared/assets/pdf/Obrazec.pdf";
 import worker from "../../worker/pdf.worker.min.mjs?url";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import styles from "./PDFviewer.module.scss";
+import styles from "./PdfViewer.module.scss";
 import "react-pdf/dist/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = worker;
@@ -11,12 +11,13 @@ pdfjs.GlobalWorkerOptions.workerSrc = worker;
 export const PdfViewer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [numPages, setNumPages] = useState(0);
+  const isMobile = window.innerWidth < 768;
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
   };
 
-  return (
+  return isMobile ? (
     <div
       ref={containerRef}
       className={styles.container}
@@ -24,12 +25,8 @@ export const PdfViewer = () => {
         width: "100%",
         height: "75vh",
         overflow: "hidden",
-        // touchAction: "none",
         position: "relative",
-        // overflowY: "scroll", // ✅ вертикальный scroll
-        // overflowX: "hidden",
-        WebkitOverflowScrolling: "touch", // для iOS плавного scroll
-        // touchAction: "pan-y",
+        WebkitOverflowScrolling: "touch",
       }}
     >
       <TransformWrapper
@@ -38,11 +35,6 @@ export const PdfViewer = () => {
         wheel={{ disabled: false }}
         pinch={{ disabled: false }}
         doubleClick={{ disabled: true }}
-        // panning={{
-        //   disabled: false,
-        //   lockAxisX: false, // разрешить drag по X
-        //   lockAxisY: true, // ❗️запретить drag по Y (чтобы работал scroll)
-        // }}
         limitToBounds={true}
         centerOnInit
       >
@@ -72,6 +64,43 @@ export const PdfViewer = () => {
           </Document>
         </TransformComponent>
       </TransformWrapper>
+    </div>
+  ) : (
+    <div
+      ref={containerRef}
+      className={styles.container}
+      style={{
+        width: "100%",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          overflowY: "scroll",
+          overflowX: "hidden",
+          borderRadius: "10",
+        }}
+      >
+        <Document
+          file={myPDF}
+          onLoadSuccess={onDocumentLoadSuccess}
+          loading="Загрузка PDF..."
+        >
+          {Array.from({ length: numPages }, (_, index) => (
+            <Page
+              key={index}
+              pageNumber={index + 1}
+              width={containerRef.current?.offsetWidth}
+              renderAnnotationLayer={false}
+              renderTextLayer={true}
+              renderMode="canvas"
+            />
+          ))}
+        </Document>
+      </div>
     </div>
   );
 };

@@ -6,6 +6,9 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
+  max-width: 500px;
+  align-self: center;
+  justify-self: center;
 
   .title {
     margin-top: 0;
